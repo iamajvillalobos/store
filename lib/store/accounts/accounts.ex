@@ -204,4 +204,16 @@ defmodule Store.Accounts do
   def change_credential(%Credential{} = credential) do
     Credential.changeset(credential, %{})
   end
+
+  @doc """
+  Checks if the merchant is registered on our system.
+  """
+
+  def authenticate_by_email_password(email, password) do
+    query = from m in Merchant, inner_join: c in assoc(m, :credential), where: c.email == ^email
+    case Repo.one(query) do
+      %Merchant{} = merchant -> {:ok, merchant}
+      nil -> {:error, :unauthorized}
+    end
+  end
 end
