@@ -18,6 +18,7 @@ defmodule StoreWeb.Router do
 
     get "/", PageController, :index
     resources "/merchants", MerchantController
+    resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
   end
 
   # Other scopes may use custom stacks.
