@@ -18,7 +18,9 @@ defmodule Store.Accounts do
 
   """
   def list_merchants do
-    Repo.all(Merchant)
+    Merchant
+    |> Repo.all
+    |> Repo.preload(:credential)
   end
 
   @doc """
@@ -35,8 +37,11 @@ defmodule Store.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_merchant!(id), do: Repo.get!(Merchant, id)
-
+  def get_merchant!(id) do
+    Merchant
+    |> Repo.get!(id)
+    |> Repo.preload(:credential)
+  end
   @doc """
   Creates a merchant.
 
