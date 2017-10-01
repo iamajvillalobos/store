@@ -7,6 +7,7 @@ defmodule Store.Accounts do
   alias Store.Repo
 
   alias Store.Accounts.Merchant
+  alias Store.Accounts.Credential
 
   @doc """
   Returns the list of merchants.
@@ -57,6 +58,7 @@ defmodule Store.Accounts do
   def create_merchant(attrs \\ %{}) do
     %Merchant{}
     |> Merchant.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Repo.insert()
   end
 
@@ -75,6 +77,7 @@ defmodule Store.Accounts do
   def update_merchant(%Merchant{} = merchant, attrs) do
     merchant
     |> Merchant.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Repo.update()
   end
 
@@ -107,7 +110,6 @@ defmodule Store.Accounts do
     Merchant.changeset(merchant, %{})
   end
 
-  alias Store.Accounts.Credential
 
   @doc """
   Returns the list of credentails.
