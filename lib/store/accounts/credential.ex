@@ -6,6 +6,7 @@ defmodule Store.Accounts.Credential do
 
   schema "credentails" do
     field :email, :string
+    field :password, :string
     belongs_to :merchant, Merchant
 
     timestamps()
@@ -14,8 +15,8 @@ defmodule Store.Accounts.Credential do
   @doc false
   def changeset(%Credential{} = credential, attrs) do
     credential
-    |> cast(attrs, [:email])
-    |> validate_required([:email])
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email, :password])
     |> unique_constraint(:email)
   end
 end
