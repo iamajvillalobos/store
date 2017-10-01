@@ -1,0 +1,5 @@
+<h2>Edit Merchant</h2>
+
+<%= render "form.html", Map.put(assigns, :action, merchant_path(@conn, :update, @merchant)) %>
+
+<span><%= link "Back", to: merchant_path(@conn, :index) %></span>
