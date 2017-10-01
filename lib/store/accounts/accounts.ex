@@ -209,7 +209,7 @@ defmodule Store.Accounts do
   Checks if the merchant is registered on our system.
   """
 
-  def authenticate_by_email_password(email, password) do
+  def authenticate_by_email_password(email, _password) do
     query = from m in Merchant, inner_join: c in assoc(m, :credential), where: c.email == ^email
     case Repo.one(query) do
       %Merchant{} = merchant -> {:ok, merchant}

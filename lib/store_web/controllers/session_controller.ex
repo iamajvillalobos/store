@@ -6,8 +6,8 @@ defmodule StoreWeb.SessionController do
     render(conn, "new.html")
   end
 
-  def create(conn, %{"merchant" => %{"email" => email, "password" => password}}) do
-    case Accounts.authenticate_by_email_password(email, password) do
+  def create(conn, %{"merchant" => %{"email" => email}}) do
+    case Accounts.authenticate_by_email_password(email, "nopassword") do
       {:ok, merchant} ->
         conn
         |> put_flash(:info, "Welcome!")
@@ -15,7 +15,7 @@ defmodule StoreWeb.SessionController do
         |> configure_session(renew: true)
         |> redirect(to: "/")
 
-      {:error, :unathorized} ->
+      {:error, :unauthorized} ->
         conn
         |> put_flash(:error, "Bad email/password combination")
         |> redirect(to: session_path(conn, :new))
@@ -25,6 +25,6 @@ defmodule StoreWeb.SessionController do
   def delete(conn, _) do
     conn
     |> configure_session(drop: true)
-    |> redirect(to: "/")
+    |> redirect(to: session_path(conn, :new))
   end
 end
