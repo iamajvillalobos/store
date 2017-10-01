@@ -7,6 +7,11 @@
     <%= @merchant.name %>
   </li>
 
+  <li>
+    <strong>Email:</strong>
+    <%= @merchant.credential.email %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: merchant_path(@conn, :edit, @merchant) %></span>
