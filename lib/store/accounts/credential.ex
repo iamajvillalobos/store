@@ -1,12 +1,12 @@
 defmodule Store.Accounts.Credential do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Store.Accounts.Credential
+  alias Store.Accounts.{Credential, Merchant}
 
 
   schema "credentails" do
     field :email, :string
-    field :merchant_id, :id
+    belongs_to :merchant, Merchant
 
     timestamps()
   end
